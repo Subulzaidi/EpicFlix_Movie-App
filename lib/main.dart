@@ -9,9 +9,10 @@ import 'pages/main_page.dart';
 
 void main() {
   runApp(
-     SplashPage(
-        onInitializationComplete: () => runApp( 
-            ProviderScope( child: MyApp(),
+    SplashPage(
+      onInitializationComplete: () => runApp(
+        ProviderScope(
+          child: MyApp(),
         ),
       ),
     ),
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flickd',
+      title: 'EpicFlix',
       initialRoute: 'home',
       routes: {
         'home': (BuildContext _context) => MainPage(),
