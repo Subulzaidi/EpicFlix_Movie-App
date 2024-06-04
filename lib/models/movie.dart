@@ -1,6 +1,5 @@
+import 'package:epicflix/models/app_config.dart';
 import 'package:get_it/get_it.dart';
-//models
-import '../models/app_config.dart';
 
 class Movie {
   final String name;
@@ -35,8 +34,13 @@ class Movie {
       releasingDate: map['release_date'],
     );
   }
+
   String posterURL() {
-    final AppConfig appConfig = GetIt.instance.get<AppConfig>();
-    return '${appConfig.BASE_IMAGE_API_URL}${this.posterPath}';
+    AppConfig? appConfig = GetIt.instance.get<AppConfig>();
+    if (appConfig != null && appConfig.BASE_IMAGE_API_URL != null) {
+      return '${appConfig.BASE_IMAGE_API_URL}${this.posterPath}';
+    } else {
+      return ''; // or handle the null case appropriately
+    }
   }
 }

@@ -2,10 +2,14 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:ui';
-
-import 'package:epicflix/models/search_category.dart';
+//packages
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+//model
+import '../models/movie.dart';
+import '../models/search_category.dart';
+//widget
+import '../widgets/movie_tile.dart';
 
 class MainPage extends ConsumerWidget {
   late double deviceHeight;
@@ -60,13 +64,20 @@ class MainPage extends ConsumerWidget {
 
   Widget foregroundWidget() {
     return Container(
-      padding: EdgeInsets.fromLTRB(0, deviceHeight * 0.2, 0, 0),
+      padding: EdgeInsets.fromLTRB(0, deviceHeight * 0.03, 0, 0),
       width: deviceWidth * 0.88,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [topbarWidget()],
+        children: [
+          topbarWidget(),
+          Container(
+            height: deviceHeight * 0.83,
+            padding: EdgeInsets.symmetric(vertical: deviceHeight * 0.01),
+            child: movieListViewWidget(),
+          )
+        ],
       ),
     );
   }
@@ -136,5 +147,48 @@ class MainPage extends ConsumerWidget {
         ),
       ],
     );
+  }
+
+  Widget movieListViewWidget() {
+    final List<Movie> movies = [];
+
+    for (var i = 0; i < 20; i++) {
+      movies.add(Movie(
+        name: 'The Godfather',
+        language: 'English',
+        isAdult: true,
+        description:
+            'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.',
+        rating: 9.2,
+        posterPath: '/3bhkrj58Vtu7enYsRolD1fZdja1.jpg',
+        backdropPath: '/rSPw7tgCH9c6NqICZef4kZjFOQ5.jpg',
+        releasingDate: '1972-03-24',
+      ));
+    }
+
+    if (movies.isNotEmpty) {
+      return ListView.builder(
+        itemCount: movies.length,
+        itemBuilder: (BuildContext context, int _count) {
+          return Padding(
+            padding: EdgeInsets.symmetric(
+                vertical: deviceHeight * 0.01, horizontal: 0),
+            child: GestureDetector(
+              onTap: () {},
+              child: MovieTile(
+                  movie: movies[_count],
+                  height: deviceHeight * 0.20,
+                  width: deviceWidth * 0.85),
+            ),
+          );
+        },
+      );
+    } else {
+      return Center(
+        child: CircularProgressIndicator(
+          backgroundColor: Colors.white,
+        ),
+      );
+    }
   }
 }

@@ -1,14 +1,12 @@
 import 'package:get_it/get_it.dart';
-
-//service
-import '../services/http_service.dart';
+import 'http_service.dart';
 
 class MovieService {
-  final GetIt getit = GetIt.instance;
-
   late HTTPService _http;
 
   MovieService() {
-    _http = getit.get<HTTPService>();
+    _http = GetIt.instance<HTTPService>();
   }
+
+  // Define methods to fetch movie data using _http.get()
 }
